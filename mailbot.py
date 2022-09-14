@@ -15,13 +15,19 @@ logfile = open(path, 'a')
 print('[LOG] end log', file = logfile)
 logfile.close()
 logfile = open (path, 'r')
-ti_m = os.path.getmtime(path) 
-bot = telebot.TeleBot(tok) 
+ti_m = os.path.getmtime(path)
+bot = telebot.TeleBot(tok)
 bot.send_document(adminID, logfile, caption = f'Лог от {time.ctime(ti_m)}')
 os.system("cls")
 print("[LOG] Бот Запущен")
 logfile.close()
 os.remove(path)
+class IsPrivate(telebot.custom_filters.SimpleCustomFilter):
+    key = 'is_private'
+    @staticmethod
+    def check(message: telebot.types.Message):
+        return message.chat.type == "private"
+bot.add_custom_filter(IsPrivate())
 class Data(object):
     def __init__(self) -> None:
         self.data:dict={}
@@ -34,7 +40,7 @@ class Data(object):
         else: self.i_obj2+=1
 data:object=Data()
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(commands=['start'],is_private=True)
 def start(message):
     file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [start]")
@@ -46,7 +52,7 @@ def start(message):
     Для предоставления списка проектов введите /prjlist
     """, parse_mode = "Markdown")
 
-@bot.message_handler(commands=['register'])
+@bot.message_handler(commands=['register'],is_private=True)
 def register_name(message):
     file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [register_name]")
@@ -112,7 +118,7 @@ def register_end(message):
         writer = csv.writer(f, delimiter=",", lineterminator="\n")
         writer.writerow(['username', 'password', 'firstname', 'lastname', 'groups'])
         writer.writerow([minimail, password, firstname, lastname, groups])
-@bot.message_handler(commands=['recovery'])
+@bot.message_handler(commands=['recovery'],is_private=True)
 def recovery_mail(message):
     file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [recovery_mail]")
@@ -124,7 +130,7 @@ def recovery_idphoto(message):
     file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [recovery_idphoto]")
     print(f"[LOG] [{message.from_user.username}] [recovery_idphoto]", file = file)
-    fole.close()
+    file.close()
     data.add({"mail": message.text})
     photo = open("studentid.png",'rb')
     textmesg = f'Теперь введите номер студенческого билета, чтобы найти его, посмотрите на фотографию'
@@ -157,7 +163,7 @@ def prjlist(message):
     bot.send_message(message.chat.id, f'''Актуальные на *{today}* проекты:
     [Почтовый ТГ бот](https://t.me/mailcrt_bot)
     ''', parse_mode='Markdown')
-@bot.message_handler(commands=['admhelp'])
+@bot.message_handler(commands=['admhelp'],is_private=True)
 def helpstart(message):
     file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [helpstart]")
