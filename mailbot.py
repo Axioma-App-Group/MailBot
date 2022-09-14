@@ -8,12 +8,20 @@ from datetime import date
 from transliterate import translit
 from config import tok
 from config import adminID
+from config import path
 import os
-log = open('LOG.txt', 'r')
-bot = telebot.TeleBot(tok)
-
+import time
+logfile = open(path, 'a')
+print('[LOG] end log', file = logfile)
+logfile.close()
+logfile = open (path, 'r')
+ti_m = os.path.getmtime(path) 
+bot = telebot.TeleBot(tok) 
+bot.send_document(adminID, logfile, caption = f'Лог от {time.ctime(ti_m)}')
 os.system("cls")
 print("[LOG] Бот Запущен")
+logfile.close()
+os.remove(path)
 class Data(object):
     def __init__(self) -> None:
         self.data:dict={}
@@ -28,8 +36,10 @@ data:object=Data()
 
 @bot.message_handler(commands=['start'])
 def start(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [start]")
-    print(f"[LOG] [{message.from_user.username}] [start]")
+    print(f"[LOG] [{message.from_user.username}] [start]", file = file)
+    file.close()
     bot.send_message(message.chat.id, f"""Приветствую, {message.from_user.first_name}. Вы попали к почтовому боту ЧРТ
     Для регистрации почты введите команду /register
     Для восстановления пароля введите команду /recovery
@@ -38,11 +48,17 @@ def start(message):
 
 @bot.message_handler(commands=['register'])
 def register_name(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [register_name]")
+    print(f"[LOG] [{message.from_user.username}] [register_name]", file = file)
+    file.close()
     mesg = bot.send_message(message.chat.id, f"Для начала введите своё имя", parse_mode = 'Markdown')
     bot.register_next_step_handler(mesg, register_surname)
 def register_surname(message):
-     print(f"[LOG] [{message.from_user.username}] [register_surname]")
+    file = open(path, 'a')
+    print(f"[LOG] [{message.from_user.username}] [register_surname]")
+    print(f"[LOG] [{message.from_user.username}] [register_surname]", file = file)
+    file.close()
     mesg = bot.send_message(message.chat.id, f"Теперь введите фамилию")
     en_text = translit(message.text, language_code='ru', reversed=True)
     en_text = en_text.lower()
@@ -51,7 +67,10 @@ def register_surname(message):
     data.add({'ru_name': ru_text})
     bot.register_next_step_handler(mesg, register_id)
 def register_id(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [register_id]")
+    print(f"[LOG] [{message.from_user.username}] [register_id]", file = file)
+    file.close()
     en_text = translit(message.text, language_code='ru', reversed=True)
     ru_text = message.text
     en_text = en_text.lower()
@@ -62,7 +81,10 @@ def register_id(message):
     mesg = bot.send_photo(message.chat.id, photo, caption = textmesg, parse_mode='Markdown')
     bot.register_next_step_handler(mesg, register_end)
 def register_end(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [register_end]")
+    print(f"[LOG] [{message.from_user.username}] [register_end]", file = file)
+    file.close()
     id = message.text.upper()
     data.add({"id": id})
     alphabet = string.ascii_letters + string.digits
@@ -92,18 +114,27 @@ def register_end(message):
         writer.writerow([minimail, password, firstname, lastname, groups])
 @bot.message_handler(commands=['recovery'])
 def recovery_mail(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [recovery_mail]")
+    print(f"[LOG] [{message.from_user.username}] [recovery_mail]", file=file)
+    file.close()
     mesg = bot.send_message(message.chat.id, f'Вас понял. Для заявки на восстановление почты введите свой адрес электронной почты вида name.surname@radiotech.su')
     bot.register_next_step_handler(mesg, recovery_idphoto)
 def recovery_idphoto(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [recovery_idphoto]")
+    print(f"[LOG] [{message.from_user.username}] [recovery_idphoto]", file = file)
+    fole.close()
     data.add({"mail": message.text})
     photo = open("studentid.png",'rb')
     textmesg = f'Теперь введите номер студенческого билета, чтобы найти его, посмотрите на фотографию'
     mesg = bot.send_photo(message.chat.id, photo, caption = textmesg, parse_mode='MarkdownV2' )
     bot.register_next_step_handler(mesg, recovery_accepting)
 def recovery_accepting(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [recovery_accepting]")
+    print(f"[LOG] [{message.from_user.username}] [recovery_accepting]", file = file)
+    file.close()
     data.add({"id": message.text})
     bot.send_message(message.chat.id, f"Заявка на восстановление пароля передана администрации. Ожидайте")
     mail = data.data['mail']
@@ -118,18 +149,27 @@ def recovery_accepting(message):
 
 @bot.message_handler(commands=['prjlist'])
 def prjlist(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [prjlist]")
+    print(f"[LOG] [{message.from_user.username}] [prjlist]", file = file)
+    file.close()
     today = date.today()
     bot.send_message(message.chat.id, f'''Актуальные на *{today}* проекты:
     [Почтовый ТГ бот](https://t.me/mailcrt_bot)
     ''', parse_mode='Markdown')
 @bot.message_handler(commands=['admhelp'])
 def helpstart(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [helpstart]")
+    print(f"[LOG] [{message.from_user.username}] [helpstart]", file = file)
+    file.close()
     mesg = bot.send_message(message.chat.id, f'''Вас понял, до призыва на помощь осталось только описать проблему''')
     bot.register_next_step_handler(mesg, helpdescription)
 def helpdescription(message):
+    file = open(path, 'a')
     print(f"[LOG] [{message.from_user.username}] [helpdescription]")
+    print(f"[LOG] [{message.from_user.username}] [helpdescription]", file = file)
+    file.close()
     data.add({"description": message.text})
     bot.send_message(message.chat.id, f"""Наши администраторы только что получили уведомление от вас. Ожидайте""")
     bot.send_message(adminID, f"""
