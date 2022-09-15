@@ -17,7 +17,7 @@ logfile.close()
 logfile = open (path, 'r')
 ti_m = os.path.getmtime(path)
 bot = telebot.TeleBot(tok)
-bot.send_document(adminID, logfile, caption = f'Лог от {time.ctime(ti_m)}')
+bot.send_document(adminID, logfile, visible_file_name = f'LOG-{time.ctime(ti_m)}.txt', caption = f'Лог от {time.ctime(ti_m)}')
 os.system("cls")
 print("[LOG] Бот Запущен")
 logfile.close()
@@ -184,6 +184,7 @@ def helpdescription(message):
     *TGID* - {message.from_user.id}
     *Описание* - {data.data['description']}
     """, parse_mode = "Markdown")
+
 bot.polling(none_stop=True, interval=0)
 try:
     bot.polling(none_stop=True)
