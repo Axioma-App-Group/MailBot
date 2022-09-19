@@ -6,20 +6,29 @@
 
 *Описание*: Данный бот позволяет зарегестрировать почту студента Челябинского Радиотехнического Техникума
 
-# Демонстрация работы
+## Демонстрация работы
 
-Команда /start
+### Команда /start
 
-Команда /register
+![startimg](readmeimg/start.png)
 
-Команда /recovery
+### Команда /register
 
-Команда /prjlist
+![regisrerimg](readmeimg/register.png)
 
-Команда /admhelp
+### Команда /recovery
+
+![recoveryimg](readmeimg/recovery.png)
+
+### Команда /prjlist
+
+![prjlistimg](readmeimg/prjlist.png)
+
+### Команда /admhelp
+
+![admhelpimg](readmeimg/admhelp.png)
 
 # TO-DO
-- [ ] (soon) Отправка лога при старте бота 
 
 - [ ] Подключить домен к почтовому сервису
 
