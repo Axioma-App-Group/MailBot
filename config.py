@@ -1,0 +1,11 @@
+path = 'LOG.txt'
+#id
+adminID = -743560614
+moderID = [1594231051, 322916859]
+#stickers
+fixstick = "CAACAgIAAxkBAAN9YygqdsSAjgtajH1SGRfmkGviIzEAAkwiAAI5SUBJ8CHZ_WGeTYYpBA"
+coolstick = "CAACAgIAAxkBAAOAYygqd5hwDCsYmmeiWloxpO4NdiMAAp8bAAJXsUlJ2S1HYa-mFsIpBA"
+okstick = "CAACAgIAAxkBAAOPYygq94QGUkMFvw3aiwh8N0vimOEAAvUfAAI4sElJt7TG4P8qer0pBA"
+histick = "CAACAgIAAxkBAAODYygqeCdTseeZtMJLFaDqs32SCPYAAvUfAAI4sElJt7TG4P8qer0pBA"
+helpstick = "CAACAgIAAxkBAAOGYygqeLMHv0uv0udy3i9D5tWSb3YAAksgAAL3mUlJTNboa07-0SEpBA"
+nostick = "CAACAgIAAxkBAAOJYygqeTBjI0472Vb_spdksN5BdTYAApMdAALJSUFJivTo8H9-nWMpBA"
